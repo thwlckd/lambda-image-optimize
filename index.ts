@@ -5,22 +5,22 @@ import sharp from 'sharp';
 declare module 'aws-lambda' {
   interface CloudFrontResponse {
     body?: string;
-    bodyEncoding?: 'text' | 'base64';
+    bodyEncoding?: 'base64';
   }
 }
 
-type Params = {
+export type Params = {
   width: number;
   height: number;
   quality: number;
   type: ImageType;
   format: ImageFormat;
 };
-type ImageType = 'cover' | 'contain' | 'fill' | 'inside' | 'outside';
-type ImageFormat = keyof sharp.FormatEnum;
+export type ImageType = 'cover' | 'contain' | 'fill' | 'inside' | 'outside';
+export type ImageFormat = keyof sharp.FormatEnum;
 
-const s3 = new S3Client({ region: process.env.AWS_REGION });
-const BUCKET = process.env.BUCKET || '';
+const s3 = new S3Client({ region: 'ap-northeast-2' });
+const BUCKET = 'resource-hyub';
 
 export const handler = async (event: CloudFrontResponseEvent, _context: Context, callback: Callback) => {
   const { request, response } = event.Records[0].cf;
